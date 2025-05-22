@@ -44,6 +44,13 @@ const Header = () => {
           >
             О проекте
           </a>
+          <a 
+            href="#about-us" 
+            className="text-primary hover:text-secondary transition-colors duration-300 py-2"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            О нас
+          </a>
         </nav>
         
         <button 
