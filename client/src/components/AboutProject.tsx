@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 
 const AboutProject = () => {
   return (
-    <section id="about" className="py-16 bg-gradient-blue-white">
+    <section id="about" className="py-16 bg-gradient-mint-white">
       <div className="container mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-bold font-lexend text-primary text-center mb-12">Почему InclusiveLearn?</h2>
         

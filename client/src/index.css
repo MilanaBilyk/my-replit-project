@@ -13,11 +13,11 @@
   --card-foreground: 20 14.3% 4.1%;
   --border: 20 5.9% 90%;
   --input: 20 5.9% 90%;
-  --primary: 210 68% 28%; /* #2A4365 - Спокойный синий */
+  --primary: 164 38% 60%; /* #73C2B0 - Мятно-голубой */
   --primary-foreground: 0 0% 100%;
   --secondary: 120 46% 36%; /* #4CAF50 - Свежий зеленый */
   --secondary-foreground: 0 0% 100%;
-  --accent: 210 92% 95%; /* #E6F3FF - Мягкий голубой */
+  --accent: 164 60% 95%; /* #E5F7F3 - Светлый мятный */
   --accent-foreground: 24 9.8% 10%;
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 60 9.1% 97.8%;
@@ -25,7 +25,7 @@
   --radius: 0.5rem;
   
   /* Custom colors */
-  --light-blue: 210 92% 95%; /* #E6F3FF - Мягкий голубой */
+  --light-blue: 164 60% 95%; /* #E5F7F3 - Светлый мятный */
   --light-green: 120 100% 95%; /* #E6FFED */
   --light-pink: 350 100% 95%; /* #FFEBF0 */
   --light-purple: 270 100% 95%; /* #F2E6FF */
@@ -76,10 +76,14 @@
 
 .font-dyslexic {
   font-family: 'OpenDyslexic', sans-serif;
+  letter-spacing: 0.5px;
+  line-height: 1.5;
+  word-spacing: 3px;
+  font-size: 1.05em;
 }
 
-.bg-gradient-pink-white {
-  background: linear-gradient(to bottom, #FFEBF5, #FFFFFF);
+.bg-gradient-mint-white {
+  background: linear-gradient(to bottom, #E5F7F3, #FFFFFF);
 }
 
 .btn-transition {
