@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 
 const AboutProject = () => {
   return (
-    <section id="about" className="py-16 bg-gradient-pink-white">
+    <section id="about" className="py-16 bg-gradient-blue-white">
       <div className="container mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-bold font-lexend text-primary text-center mb-12">Почему InclusiveLearn?</h2>
         
@@ -13,7 +13,7 @@ const AboutProject = () => {
           </p>
           
           <img 
-            src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&h=800" 
+            src="/images/diverse-classroom.jpg" 
             alt="Дети разных возможностей учатся вместе" 
             className="rounded-xl shadow-xl max-w-full h-auto mx-auto mb-8"
           />
@@ -42,6 +42,7 @@ const AboutProject = () => {
             <Button 
               variant="outline"
               className="border-2 border-primary text-primary hover:bg-primary hover:text-white font-bold py-3 px-6 rounded-lg btn-transition"
+              onClick={() => document.getElementById('exercises')?.scrollIntoView({ behavior: 'smooth' })}
             >
               Перейти к упражнениям
             </Button>

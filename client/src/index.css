@@ -13,11 +13,11 @@
   --card-foreground: 20 14.3% 4.1%;
   --border: 20 5.9% 90%;
   --input: 20 5.9% 90%;
-  --primary: 325 45% 50%; /* #C25B8C - более нежный розовый вместо синего */
+  --primary: 210 68% 28%; /* #2A4365 - Спокойный синий */
   --primary-foreground: 0 0% 100%;
-  --secondary: 120 46% 36%; /* #4CAF50 */
+  --secondary: 120 46% 36%; /* #4CAF50 - Свежий зеленый */
   --secondary-foreground: 0 0% 100%;
-  --accent: 325 100% 95%; /* #FFEBF5 - более нежный розовый оттенок */
+  --accent: 210 92% 95%; /* #E6F3FF - Мягкий голубой */
   --accent-foreground: 24 9.8% 10%;
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 60 9.1% 97.8%;
@@ -25,9 +25,9 @@
   --radius: 0.5rem;
   
   /* Custom colors */
-  --light-pink: 325 100% 95%; /* #FFEBF5 */
-  --light-blue: 195 100% 95%; /* #E6FAFF */
+  --light-blue: 210 92% 95%; /* #E6F3FF - Мягкий голубой */
   --light-green: 120 100% 95%; /* #E6FFED */
+  --light-pink: 350 100% 95%; /* #FFEBF0 */
   --light-purple: 270 100% 95%; /* #F2E6FF */
   --light-yellow: 55 100% 95%; /* #FFFDE6 */
   --secondary-hover: 120 48% 31%; /* #45A049 */

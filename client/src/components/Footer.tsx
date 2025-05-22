@@ -1,48 +1,33 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import PrivacyPolicy from "./PrivacyPolicy";
 
 const Footer = () => {
   return (
     <footer className="bg-primary text-white py-12">
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Column 1 */}
           <div>
             <h2 className="text-3xl font-bold font-lexend mb-4">InclusiveLearn</h2>
-            <p className="text-pink-200">Учимся без границ!</p>
+            <p className="text-blue-200">Учимся без границ!</p>
           </div>
           
           {/* Column 2 */}
           <div>
-            <h3 className="text-xl font-semibold mb-4">Ссылки</h3>
+            <h3 className="text-xl font-semibold mb-4">Полезные ссылки</h3>
             <ul className="space-y-2">
-              <li><a href="#about-us" className="text-pink-200 hover:text-white transition-colors duration-300">О нас</a></li>
-              <li><a href="#about-us" className="text-pink-200 hover:text-white transition-colors duration-300">Контакты</a></li>
-              <li><a href="#" className="text-pink-200 hover:text-white transition-colors duration-300">Политика конфиденциальности</a></li>
+              <li><a href="#about-us" className="text-blue-200 hover:text-white transition-colors duration-300">О нас</a></li>
+              <li><a href="#exercises" className="text-blue-200 hover:text-white transition-colors duration-300">Упражнения</a></li>
+              <li className="text-blue-200"><PrivacyPolicy /></li>
             </ul>
           </div>
           
           {/* Column 3 */}
           <div>
-            <h3 className="text-xl font-semibold mb-4">Соцсети</h3>
-            <div className="flex space-x-4">
-              <a href="#" className="text-pink-200 hover:text-white transition-colors duration-300" aria-label="Telegram">
-                <i className="fab fa-telegram fa-2x"></i>
-              </a>
-              <a href="#" className="text-pink-200 hover:text-white transition-colors duration-300" aria-label="ВКонтакте">
-                <i className="fab fa-vk fa-2x"></i>
-              </a>
-              <a href="#" className="text-pink-200 hover:text-white transition-colors duration-300" aria-label="YouTube">
-                <i className="fab fa-youtube fa-2x"></i>
-              </a>
-            </div>
-          </div>
-          
-          {/* Column 4 */}
-          <div>
-            <h3 className="text-xl font-semibold mb-4">Контакт</h3>
+            <h3 className="text-xl font-semibold mb-4">Контакты</h3>
             <div className="mb-4">
-              <p className="text-pink-200 mb-2">
+              <p className="text-blue-200 mb-2">
                 <i className="fas fa-envelope mr-2"></i> milana.com04@mail.ru
               </p>
             </div>
@@ -62,7 +47,7 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className="border-t border-pink-800 mt-8 pt-8 text-center text-pink-200">
+        <div className="border-t border-blue-800 mt-8 pt-8 text-center text-blue-200">
           <p>&copy; {new Date().getFullYear()} InclusiveLearn. Основатель: Милана Билык. Все права защищены.</p>
         </div>
       </div>

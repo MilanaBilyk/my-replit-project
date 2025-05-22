@@ -11,7 +11,7 @@ const AboutUs = () => {
             <div className="md:w-1/3">
               <div className="rounded-full overflow-hidden border-4 border-primary shadow-lg mx-auto w-48 h-48">
                 <img 
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300" 
+                  src="/images/milana.jpg" 
                   alt="Милана Билык" 
                   className="w-full h-full object-cover"
                 />
@@ -33,7 +33,7 @@ const AboutUs = () => {
             </div>
           </div>
           
-          <div className="bg-[#FFEBF5] rounded-xl p-8 shadow-md mb-12">
+          <div className="bg-[#E6F3FF] rounded-xl p-8 shadow-md mb-12">
             <h3 className="text-xl font-lexend font-semibold text-primary mb-4">Наша философия</h3>
             <p className="text-gray-700 mb-4">
               Мы считаем, что каждый ребенок уникален и заслуживает индивидуального подхода к обучению. 
@@ -45,7 +45,7 @@ const AboutUs = () => {
             </p>
           </div>
           
-          <div className="bg-white border border-[#FFEBF5] rounded-xl p-8 shadow-md">
+          <div className="bg-white border border-[#E6F3FF] rounded-xl p-8 shadow-md">
             <h3 className="text-xl font-lexend font-semibold text-primary mb-4">Контакты</h3>
             
             <div className="flex flex-col md:flex-row gap-6">
@@ -58,24 +58,6 @@ const AboutUs = () => {
                   <i className="fas fa-envelope"></i>
                   <a href="mailto:milana.com04@mail.ru" className="hover:underline">milana.com04@mail.ru</a>
                 </p>
-              </div>
-              
-              <div className="flex-1">
-                <h4 className="font-semibold text-gray-800 mb-2">Следите за обновлениями</h4>
-                <p className="text-gray-700 mb-4">
-                  Подпишитесь на наши социальные сети, чтобы быть в курсе всех новостей
-                </p>
-                <div className="flex space-x-4">
-                  <a href="#" className="text-primary hover:text-secondary transition-colors duration-300" aria-label="Telegram">
-                    <i className="fab fa-telegram fa-2x"></i>
-                  </a>
-                  <a href="#" className="text-primary hover:text-secondary transition-colors duration-300" aria-label="ВКонтакте">
-                    <i className="fab fa-vk fa-2x"></i>
-                  </a>
-                  <a href="#" className="text-primary hover:text-secondary transition-colors duration-300" aria-label="YouTube">
-                    <i className="fab fa-youtube fa-2x"></i>
-                  </a>
-                </div>
               </div>
             </div>
           </div>
