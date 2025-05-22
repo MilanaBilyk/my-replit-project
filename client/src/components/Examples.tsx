@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { useSpeech } from '@/hooks/useSpeech';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -9,6 +9,7 @@ interface ExampleText {
   adaptedBlocks: string[];
   subject: string;
   grade: string;
+  audioFile?: string; // Путь к аудиофайлу для озвучивания
 }
 
 const exampleTexts: ExampleText[] = [
@@ -21,7 +22,8 @@ const exampleTexts: ExampleText[] = [
       "Фотосинтез — процесс, при котором растения",
       "превращают солнечный свет в энергию.",
       "Этот процесс происходит в хлоропластах и включает две стадии: световую и темновую."
-    ]
+    ],
+    audioFile: "/audio/фотосинтез.mp3"
   },
   {
     title: "Умножение дробей",
@@ -33,7 +35,8 @@ const exampleTexts: ExampleText[] = [
       "нужно умножить числитель на числитель,",
       "а знаменатель на знаменатель.",
       "Например, 2/3 × 3/4 = (2×3)/(3×4) = 6/12 = 1/2."
-    ]
+    ],
+    audioFile: "/audio/математика.mp3"
   },
   {
     title: "Планеты Солнечной системы",
@@ -46,23 +49,85 @@ const exampleTexts: ExampleText[] = [
       "Юпитер, Сатурн, Уран и Нептун.",
       "Они вращаются вокруг Солнца по своим орбитам.",
       "Ближе всего к Солнцу находится Меркурий."
-    ]
+    ],
+    audioFile: "/audio/планеты.mp3"
   }
 ];
 
 const Examples = () => {
   const [isDyslexicFont, setIsDyslexicFont] = useState(false);
   const [selectedExampleIndex, setSelectedExampleIndex] = useState(0);
-  const { speak, isSpeaking } = useSpeech();
+  const { speak, isSpeaking, cancel } = useSpeech();
+  const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
+  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
   const selectedExample = exampleTexts[selectedExampleIndex];
+  
+  useEffect(() => {
+    // Остановить текущее аудио при смене примера
+    if (audioElement) {
+      audioElement.pause();
+      audioElement.currentTime = 0;
+      setIsPlayingAudio(false);
+    }
+    cancel(); // Остановить TTS
+  }, [selectedExampleIndex, cancel]);
+
+  // Освобождаем ресурсы при размонтировании компонента
+  useEffect(() => {
+    return () => {
+      if (audioElement) {
+        audioElement.pause();
+        audioElement.src = '';
+        setAudioElement(null);
+      }
+      cancel();
+    };
+  }, [cancel]);
   
   const handleToggleFont = () => {
     setIsDyslexicFont(!isDyslexicFont);
   };
   
   const handleSpeak = () => {
-    speak(selectedExample.originalText);
+    // Если есть аудиофайл, воспроизводим его
+    if (selectedExample.audioFile) {
+      if (audioElement) {
+        audioElement.pause();
+        audioElement.currentTime = 0;
+      }
+      
+      const audio = new Audio(selectedExample.audioFile);
+      setAudioElement(audio);
+      
+      audio.onplay = () => setIsPlayingAudio(true);
+      audio.onended = () => setIsPlayingAudio(false);
+      audio.onpause = () => setIsPlayingAudio(false);
+      audio.onerror = (e) => {
+        console.error("Ошибка воспроизведения аудио:", e);
+        setIsPlayingAudio(false);
+        // Если произошла ошибка с аудиофайлом, используем TTS
+        speak(selectedExample.originalText);
+      };
+      
+      audio.play().catch(error => {
+        console.error("Ошибка запуска аудио:", error);
+        // Запасной вариант: используем TTS
+        speak(selectedExample.originalText);
+      });
+    } else {
+      // Если аудиофайла нет, используем TTS
+      speak(selectedExample.originalText);
+    }
+  };
+  
+  const stopAudio = () => {
+    if (audioElement) {
+      audioElement.pause();
+      audioElement.currentTime = 0;
+      setIsPlayingAudio(false);
+    }
+    cancel();
   };
   
   return (
@@ -87,16 +152,23 @@ const Examples = () => {
                 >
                   <i className="fas fa-font mr-2"></i> Шрифт для дислексии
                 </Button>
-                <Button
-                  variant="outline"
-                  onClick={handleSpeak}
-                  disabled={isSpeaking}
-                  className={`flex items-center border border-primary rounded-lg px-4 py-2 transition-colors duration-300 ${
-                    isSpeaking ? 'bg-primary text-white' : 'text-primary hover:bg-primary hover:text-white'
-                  }`}
-                >
-                  <i className={`fas ${isSpeaking ? 'fa-volume-high' : 'fa-volume-up'} mr-2`}></i> {isSpeaking ? 'Озвучивается...' : 'Слушать'}
-                </Button>
+                {(isSpeaking || isPlayingAudio) ? (
+                  <Button
+                    variant="outline"
+                    onClick={stopAudio}
+                    className="flex items-center border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-lg px-4 py-2 transition-colors duration-300"
+                  >
+                    <i className="fas fa-stop mr-2"></i> Остановить
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outline"
+                    onClick={handleSpeak}
+                    className="flex items-center border border-primary rounded-lg px-4 py-2 transition-colors duration-300 text-primary hover:bg-primary hover:text-white"
+                  >
+                    <i className="fas fa-volume-up mr-2"></i> Слушать
+                  </Button>
+                )}
               </div>
             </div>
             

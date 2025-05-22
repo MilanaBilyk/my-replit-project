@@ -1,18 +1,37 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
-const PrivacyPolicy = () => {
+interface PrivacyPolicyProps {
+  asButton?: boolean;
+}
+
+const PrivacyPolicy = ({ asButton = false }: PrivacyPolicyProps) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsOpen(true);
+  };
+
+  const triggerElement = asButton ? (
+    <span 
+      className="cursor-pointer text-white font-bold"
+      onClick={handleOpenModal}
+    >
+      Политика конфиденциальности
+    </span>
+  ) : (
+    <Button 
+      variant="link" 
+      className="text-primary hover:text-secondary transition-colors duration-300"
+      onClick={handleOpenModal}
+    >
+      Политика конфиденциальности
+    </Button>
+  );
 
   return (
     <>
-      <Button 
-        variant="link" 
-        className="text-primary hover:text-secondary transition-colors duration-300"
-        onClick={() => setIsOpen(true)}
-      >
-        Политика конфиденциальности
-      </Button>
+      {triggerElement}
 
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">

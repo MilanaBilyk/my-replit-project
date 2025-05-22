@@ -21,12 +21,10 @@ const Footer = () => {
               <li><a href="#exercises" className="text-teal-100 hover:text-white transition-colors duration-300">Упражнения</a></li>
               <li>
                 <div className="mt-3 mb-2">
-                  <Button 
-                    className="bg-secondary hover:bg-[#45A049] text-white font-bold py-2 px-4 rounded-lg shadow-md btn-transition flex items-center"
-                  >
+                  <div className="bg-secondary text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-[#45A049] transition-colors duration-300 flex items-center">
                     <i className="fas fa-shield-alt mr-2"></i>
-                    <PrivacyPolicy />
-                  </Button>
+                    <PrivacyPolicy asButton={true} />
+                  </div>
                 </div>
               </li>
             </ul>
