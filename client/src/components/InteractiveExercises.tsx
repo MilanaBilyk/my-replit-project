@@ -207,6 +207,41 @@ const InteractiveExercises = () => {
     visible: false
   });
 
+  // Rhyme exercises state
+  const rhymeExercises = [
+    { word: "КОТ", options: ["ДОМ", "РОТ", "МЯЧ"], answer: "РОТ" },
+    { word: "ЛЕС", options: ["ПЁС", "ДОМ", "СТОЛ"], answer: "ПЁС" },
+    { word: "МИШКА", options: ["ШИШКА", "КНИГА", "ЧАШКА"], answer: "ШИШКА" },
+    { word: "РОЗА", options: ["КОЗА", "ЛИСА", "ГОРА"], answer: "КОЗА" },
+    { word: "ДЕНЬ", options: ["ТЕНЬ", "СВЕТ", "НОЧЬ"], answer: "ТЕНЬ" },
+    { word: "МАМА", options: ["ПАПА", "РАМА", "КАША"], answer: "РАМА" },
+    { word: "ДОМ", options: ["КОМ", "САД", "ЛЕС"], answer: "КОМ" },
+    { word: "РЕКА", options: ["РУКА", "НОГА", "ВОДА"], answer: "РУКА" },
+    { word: "ЗИМА", options: ["ТИМА", "ЛЕТО", "СНЕГ"], answer: "ТИМА" },
+    { word: "ЛУНА", options: ["ВОЛНА", "ЗВЕЗДА", "СОЛНЦЕ"], answer: "ВОЛНА" },
+    { word: "СОБАКА", options: ["ЗАБАКА", "КОШКА", "МЫШКА"], answer: "ЗАБАКА" },
+    { word: "КНИГА", options: ["ФИГА", "РУЧКА", "СТОЛ"], answer: "ФИГА" },
+    { word: "ШКОЛА", options: ["ПОЛА", "ПАРТА", "УРОК"], answer: "ПОЛА" },
+    { word: "МОРЕ", options: ["ПОЛЕ", "РЫБА", "ВОЛНА"], answer: "ПОЛЕ" },
+    { word: "ПЕЧКА", options: ["РЕЧКА", "ОГОНЬ", "ДЫМ"], answer: "РЕЧКА" },
+    { word: "БЕЛКА", options: ["СТРЕЛКА", "ОРЕХ", "ДЕРЕВО"], answer: "СТРЕЛКА" },
+    { word: "ЛЕТО", options: ["НЕБО", "ЖАРА", "ПЛЯЖ"], answer: "НЕБО" },
+    { word: "МЯЧИК", options: ["ЗАЙЧИК", "ИГРА", "КРУГ"], answer: "ЗАЙЧИК" },
+    { word: "СОЛНЦЕ", options: ["ОКОНЦЕ", "ТЕПЛО", "СВЕТ"], answer: "ОКОНЦЕ" },
+    { word: "ВЕТЕР", options: ["ПЕТЕР", "ДОЖДЬ", "ТУЧА"], answer: "ПЕТЕР" },
+    { word: "ДОРОГА", options: ["ПИРОГА", "МАШИНА", "ПУТЬ"], answer: "ПИРОГА" },
+    { word: "ЦВЕТОК", options: ["ЛЕПЕСТОК", "РОЗА", "САД"], answer: "ЛЕПЕСТОК" },
+    { word: "ОКНО", options: ["ТЕМНО", "СТЕКЛО", "ДОМ"], answer: "ТЕМНО" }
+  ];
+  
+  const [currentRhymeIndex, setCurrentRhymeIndex] = useState(0);
+  const [selectedRhyme, setSelectedRhyme] = useState<string | null>(null);
+  const [rhymeResult, setRhymeResult] = useState<ExerciseResult>({
+    message: '',
+    success: false,
+    visible: false
+  });
+
   // Exercise 1 handlers
   const handleLetterCheck = () => {
     const currentExercise = missingLetterExercises[currentMissingLetterIndex];
@@ -295,16 +330,51 @@ const InteractiveExercises = () => {
     setCurrentScrambledWordIndex((prev) => (prev + 1) % scrambledWordExercises.length);
   };
 
+  // Exercise 4 handlers (Rhyme)
+  const handleRhymeCheck = (selectedOption: string) => {
+    const currentExercise = rhymeExercises[currentRhymeIndex];
+    setSelectedRhyme(selectedOption);
+    
+    if (selectedOption === currentExercise.answer) {
+      setRhymeResult({
+        message: '🎉 Отлично! Это правильная рифма!',
+        success: true,
+        visible: true
+      });
+    } else {
+      setRhymeResult({
+        message: `❌ Попробуй ещё раз! Правильная рифма: ${currentExercise.answer}`,
+        success: false,
+        visible: true
+      });
+    }
+
+    setTimeout(() => {
+      setRhymeResult({ message: '', success: false, visible: false });
+    }, 3000);
+  };
+
+  const handleNextRhyme = () => {
+    setRhymeResult({
+      message: '',
+      success: false,
+      visible: false
+    });
+    setSelectedRhyme(null);
+    setCurrentRhymeIndex((prev) => (prev + 1) % rhymeExercises.length);
+  };
+
   return (
     <section id="exercises" className="py-16 bg-white">
       <div className="container mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-bold font-lexend text-primary text-center mb-12">Практикуйтесь!</h2>
         
         <Tabs defaultValue="missing-letter" className="max-w-4xl mx-auto">
-          <TabsList className="grid grid-cols-3 mb-8">
+          <TabsList className="grid grid-cols-4 mb-8">
             <TabsTrigger value="missing-letter">Пропущенная буква</TabsTrigger>
             <TabsTrigger value="multiple-choice">Выбери ответ</TabsTrigger>
             <TabsTrigger value="scrambled-word">Собери слово</TabsTrigger>
+            <TabsTrigger value="rhyme">Найди рифму</TabsTrigger>
           </TabsList>
           
           <TabsContent value="missing-letter">
