@@ -521,6 +521,59 @@ const InteractiveExercises = () => {
               )}
             </div>
           </TabsContent>
+
+          <TabsContent value="rhyme">
+            <div className="bg-[#E6F3FF] border border-primary/20 rounded-xl p-8 shadow-md">
+              <h3 className="text-xl font-semibold font-lexend text-primary mb-6">Найди рифму</h3>
+              
+              <div className="mb-6">
+                <p className="text-3xl font-bold text-center mb-4 text-primary">{rhymeExercises[currentRhymeIndex].word}</p>
+                <p className="text-sm text-gray-600 text-center mb-4">Выберите слово, которое рифмуется с данным</p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                {rhymeExercises[currentRhymeIndex].options.map((option, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleRhymeCheck(option)}
+                    disabled={selectedRhyme !== null}
+                    className={`p-4 text-lg font-semibold rounded-lg border-2 transition-all duration-300 ${
+                      selectedRhyme === option
+                        ? option === rhymeExercises[currentRhymeIndex].answer
+                          ? 'bg-green-100 border-green-500 text-green-800'
+                          : 'bg-red-100 border-red-500 text-red-800'
+                        : 'bg-white border-primary text-primary hover:bg-primary hover:text-white'
+                    }`}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+              
+              {rhymeResult.visible && (
+                <div>
+                  <div className={`text-center p-2 rounded-lg ${rhymeResult.success ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                    {rhymeResult.message}
+                  </div>
+                  
+                  {rhymeResult.success && (
+                    <div className="mt-4 text-center">
+                      <Button 
+                        onClick={handleNextRhyme}
+                        className="bg-primary hover:bg-primary/80 text-white font-bold py-2 px-4 rounded-lg shadow-md btn-transition"
+                      >
+                        Следующее слово
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              )}
+              
+              <div className="mt-4 text-center text-sm text-gray-600">
+                Упражнение {currentRhymeIndex + 1} из {rhymeExercises.length}
+              </div>
+            </div>
+          </TabsContent>
         </Tabs>
       </div>
     </section>
