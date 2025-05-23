@@ -242,6 +242,38 @@ const InteractiveExercises = () => {
     visible: false
   });
 
+  // Syllable exercises state
+  const syllableExercises = [
+    { word: "СОБАКА", syllables: ["СО", "БА", "КА"], answer: "СО-БА-КА" },
+    { word: "КОШКА", syllables: ["КОШ", "КА"], answer: "КОШ-КА" },
+    { word: "МОЛОКО", syllables: ["МО", "ЛО", "КО"], answer: "МО-ЛО-КО" },
+    { word: "МАШИНА", syllables: ["МА", "ШИ", "НА"], answer: "МА-ШИ-НА" },
+    { word: "ВЕЛОСИПЕД", syllables: ["ВЕ", "ЛО", "СИ", "ПЕД"], answer: "ВЕ-ЛО-СИ-ПЕД" },
+    { word: "БАБОЧКА", syllables: ["БА", "БОЧ", "КА"], answer: "БА-БОЧ-КА" },
+    { word: "РАДУГА", syllables: ["РА", "ДУ", "ГА"], answer: "РА-ДУ-ГА" },
+    { word: "ЦВЕТОК", syllables: ["ЦВЕ", "ТОК"], answer: "ЦВЕ-ТОК" },
+    { word: "УЧЕБНИК", syllables: ["У", "ЧЕБ", "НИК"], answer: "У-ЧЕБ-НИК" },
+    { word: "ЧЕРЕПАХА", syllables: ["ЧЕ", "РЕ", "ПА", "ХА"], answer: "ЧЕ-РЕ-ПА-ХА" },
+    { word: "МАГАЗИН", syllables: ["МА", "ГА", "ЗИН"], answer: "МА-ГА-ЗИН" },
+    { word: "ТЕЛЕФОН", syllables: ["ТЕ", "ЛЕ", "ФОН"], answer: "ТЕ-ЛЕ-ФОН" },
+    { word: "МОРОЖЕНОЕ", syllables: ["МО", "РО", "ЖЕ", "НО", "Е"], answer: "МО-РО-ЖЕ-НО-Е" },
+    { word: "КОМПЬЮТЕР", syllables: ["КОМ", "ПЬЮ", "ТЕР"], answer: "КОМ-ПЬЮ-ТЕР" },
+    { word: "СОЛНЦЕ", syllables: ["СОЛ", "НЦЕ"], answer: "СОЛ-НЦЕ" },
+    { word: "ПТИЦА", syllables: ["ПТИ", "ЦА"], answer: "ПТИ-ЦА" },
+    { word: "ДЕРЕВО", syllables: ["ДЕ", "РЕ", "ВО"], answer: "ДЕ-РЕ-ВО" },
+    { word: "СКАЗКА", syllables: ["СКАЗ", "КА"], answer: "СКАЗ-КА" },
+    { word: "ИГРУШКА", syllables: ["ИГ", "РУШ", "КА"], answer: "ИГ-РУШ-КА" },
+    { word: "ПОДАРОК", syllables: ["ПО", "ДА", "РОК"], answer: "ПО-ДА-РОК" }
+  ];
+  
+  const [currentSyllableIndex, setCurrentSyllableIndex] = useState(0);
+  const [syllableOrder, setSyllableOrder] = useState<string[]>([]);
+  const [syllableResult, setSyllableResult] = useState<ExerciseResult>({
+    message: '',
+    success: false,
+    visible: false
+  });
+
   // Exercise 1 handlers
   const handleLetterCheck = () => {
     const currentExercise = missingLetterExercises[currentMissingLetterIndex];
@@ -364,17 +396,71 @@ const InteractiveExercises = () => {
     setCurrentRhymeIndex((prev) => (prev + 1) % rhymeExercises.length);
   };
 
+  // Exercise 5 handlers (Syllables)
+  const shuffleSyllables = (syllables: string[]) => {
+    const shuffled = [...syllables];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+
+  const handleSyllableClick = (syllable: string) => {
+    if (!syllableOrder.includes(syllable)) {
+      setSyllableOrder(prev => [...prev, syllable]);
+    }
+  };
+
+  const handleSyllableRemove = (index: number) => {
+    setSyllableOrder(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleSyllableCheck = () => {
+    const currentExercise = syllableExercises[currentSyllableIndex];
+    const userAnswer = syllableOrder.join('-');
+    
+    if (userAnswer === currentExercise.answer) {
+      setSyllableResult({
+        message: '🎉 Правильно! Слоги собраны верно!',
+        success: true,
+        visible: true
+      });
+    } else {
+      setSyllableResult({
+        message: `❌ Неверно. Правильный ответ: ${currentExercise.answer}`,
+        success: false,
+        visible: true
+      });
+    }
+
+    setTimeout(() => {
+      setSyllableResult({ message: '', success: false, visible: false });
+    }, 3000);
+  };
+
+  const handleNextSyllable = () => {
+    setSyllableResult({
+      message: '',
+      success: false,
+      visible: false
+    });
+    setSyllableOrder([]);
+    setCurrentSyllableIndex((prev) => (prev + 1) % syllableExercises.length);
+  };
+
   return (
     <section id="exercises" className="py-16 bg-white">
       <div className="container mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-bold font-lexend text-primary text-center mb-12">Практикуйтесь!</h2>
         
         <Tabs defaultValue="missing-letter" className="max-w-4xl mx-auto">
-          <TabsList className="grid grid-cols-4 mb-8">
+          <TabsList className="grid grid-cols-5 mb-8">
             <TabsTrigger value="missing-letter">Пропущенная буква</TabsTrigger>
             <TabsTrigger value="multiple-choice">Выбери ответ</TabsTrigger>
             <TabsTrigger value="scrambled-word">Собери слово</TabsTrigger>
             <TabsTrigger value="rhyme">Найди рифму</TabsTrigger>
+            <TabsTrigger value="syllables">Слоги</TabsTrigger>
           </TabsList>
           
           <TabsContent value="missing-letter">
@@ -571,6 +657,92 @@ const InteractiveExercises = () => {
               
               <div className="mt-4 text-center text-sm text-gray-600">
                 Упражнение {currentRhymeIndex + 1} из {rhymeExercises.length}
+              </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="syllables">
+            <div className="bg-[#FFF5E6] border border-primary/20 rounded-xl p-8 shadow-md">
+              <h3 className="text-xl font-semibold font-lexend text-primary mb-6">Собери слово из слогов</h3>
+              
+              <div className="mb-6">
+                <p className="text-3xl font-bold text-center mb-4 text-primary">{syllableExercises[currentSyllableIndex].word}</p>
+                <p className="text-sm text-gray-600 text-center mb-4">Расставьте слоги в правильном порядке</p>
+              </div>
+              
+              {/* Выбранные слоги */}
+              <div className="mb-6">
+                <h4 className="text-lg font-semibold mb-3">Ваш ответ:</h4>
+                <div className="min-h-[60px] border-2 border-dashed border-primary rounded-lg p-4 flex flex-wrap gap-2">
+                  {syllableOrder.length === 0 ? (
+                    <span className="text-gray-400 italic">Выберите слоги...</span>
+                  ) : (
+                    syllableOrder.map((syllable, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleSyllableRemove(index)}
+                        className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/80 transition-colors duration-300"
+                      >
+                        {syllable}
+                        <span className="ml-2 text-xs">✕</span>
+                      </button>
+                    ))
+                  )}
+                </div>
+              </div>
+              
+              {/* Доступные слоги */}
+              <div className="mb-6">
+                <h4 className="text-lg font-semibold mb-3">Доступные слоги:</h4>
+                <div className="flex flex-wrap gap-3 justify-center">
+                  {shuffleSyllables(syllableExercises[currentSyllableIndex].syllables).map((syllable, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleSyllableClick(syllable)}
+                      disabled={syllableOrder.includes(syllable)}
+                      className={`px-4 py-2 text-lg font-semibold rounded-lg border-2 transition-all duration-300 ${
+                        syllableOrder.includes(syllable)
+                          ? 'bg-gray-200 text-gray-400 border-gray-300 cursor-not-allowed'
+                          : 'bg-white border-primary text-primary hover:bg-primary hover:text-white'
+                      }`}
+                    >
+                      {syllable}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="text-center mb-4">
+                <Button 
+                  onClick={handleSyllableCheck}
+                  disabled={syllableOrder.length === 0}
+                  className="bg-primary hover:bg-primary/80 text-white font-bold py-2 px-6 rounded-lg shadow-md btn-transition"
+                >
+                  Проверить
+                </Button>
+              </div>
+              
+              {syllableResult.visible && (
+                <div>
+                  <div className={`text-center p-2 rounded-lg ${syllableResult.success ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                    {syllableResult.message}
+                  </div>
+                  
+                  {syllableResult.success && (
+                    <div className="mt-4 text-center">
+                      <Button 
+                        onClick={handleNextSyllable}
+                        className="bg-primary hover:bg-primary/80 text-white font-bold py-2 px-4 rounded-lg shadow-md btn-transition"
+                      >
+                        Следующее слово
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              )}
+              
+              <div className="mt-4 text-center text-sm text-gray-600">
+                Упражнение {currentSyllableIndex + 1} из {syllableExercises.length}
               </div>
             </div>
           </TabsContent>

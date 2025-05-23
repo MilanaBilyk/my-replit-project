@@ -13,23 +13,23 @@ const AboutProject = () => {
           </p>
           
           <img 
-            src="/images/diverse-classroom.jpg" 
-            alt="Дети разных возможностей учатся вместе" 
+            src="/why-inclusive-learn.png" 
+            alt="Инклюзивное обучение для детей с особенностями развития" 
             className="rounded-xl shadow-xl max-w-full h-auto mx-auto mb-8"
           />
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div className="bg-white p-6 rounded-xl shadow-md">
-              <div className="text-3xl font-bold text-secondary mb-2">85%</div>
-              <p className="text-gray-700">пользователей улучшили навыки чтения за 3 месяца</p>
+              <div className="text-3xl font-bold text-secondary mb-2">85+</div>
+              <p className="text-gray-700">интерактивных упражнений в платформе</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-md">
-              <div className="text-3xl font-bold text-secondary mb-2">10,000+</div>
-              <p className="text-gray-700">адаптированных материалов</p>
+              <div className="text-3xl font-bold text-secondary mb-2">8</div>
+              <p className="text-gray-700">учебных материалов с адаптацией</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-md">
-              <div className="text-3xl font-bold text-secondary mb-2">24/7</div>
-              <p className="text-gray-700">доступность на любом устройстве</p>
+              <div className="text-3xl font-bold text-secondary mb-2">4</div>
+              <p className="text-gray-700">типа развивающих упражнений</p>
             </div>
           </div>
           
